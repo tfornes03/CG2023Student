@@ -334,6 +334,94 @@ void ForEachPixel(Image& img, const Image& img2, F f) {
 
 #endif
 
+
+//*******OUR FUNCTIONS*********
+void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
+	float dx = x1 - x0;
+	float dy = y1 - y0;
+	float d = fmax(abs(dx), abs(dy));
+	Vector2 v;
+	v.x = dx / d;
+	v.y = dy / d;
+	Vector2 start;
+	int x = x0;
+	int y = y0;
+	start.x = x;
+	start.y = y;
+	for (int i = 0; i < d; i++) {
+		start.x += v.x;
+		start.y += v.y;
+		SetPixel(floor(start.x), floor(start.y), c);
+	}
+}
+void Image::DrawLineBresenham(int x0, int y0, int x1, int y1, const Color& c) {
+	int x = abs(x1 - x0);
+	int y = abs(y1 - y0);
+	int dirx, diry;
+	if (x0 < x1) { dirx = 1; }
+	else { dirx = -1; }
+	if (y0 < y1) { diry = 1; }
+	else { diry = -1; }
+	int d = x - y;
+		
+	while (!(x0 == x1) && !(y0 == y1)) {
+		SetPixel(x0, y0, c);
+		int d2 = 2 * d;
+		if (d2 < x) {
+			d = d + x;
+			y0 = y0 + diry;
+		}
+		if (d2 > -y) {
+			d = d - y;
+			x0 = x0 + dirx;
+		}
+	}
+}
+
+void Image::DrawCircle(int x0, int y0, int r, const Color& c, bool fill) {
+	int x = r;
+	int y = 0;
+	int decision = 1 - x;
+
+	while (y <= x) {
+		if (fill) {
+			for (int i = x0 - x; i <= x0 + x; i++) {
+				SetPixelSafe(i, y0 + y, c);
+				SetPixelSafe(i, y0 - y, c);
+			}
+			for (int i = x0 - y; i <= x0 + y; i++) {
+				SetPixelSafe(i, y0 + x, c);
+				SetPixelSafe(i, y0 - x, c);
+			}
+		}
+		else {
+			SetPixelSafe(x0 + x, y0 + y, c);
+			SetPixelSafe(x0 - x, y0 + y, c);
+			SetPixelSafe(x0 + x, y0 - y, c);
+			SetPixelSafe(x0 - x, y0 - y, c);
+			SetPixelSafe(x0 + y, y0 + x, c);
+			SetPixelSafe(x0 - y, y0 + x, c);
+			SetPixelSafe(x0 + y, y0 - x, c);
+			SetPixelSafe(x0 - y, y0 - x, c);
+		}
+
+		y++;
+
+		if (decision <= 0) {
+			decision += 2 * y + 1;
+		}
+		else {
+			x--;
+			decision += 2 * (y - x) + 1;
+		}
+	}
+
+
+
+}
+
+
+
 FloatImage::FloatImage(unsigned int width, unsigned int height)
 {
 	this->width = width;

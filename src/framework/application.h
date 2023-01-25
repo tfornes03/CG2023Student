@@ -10,8 +10,20 @@
 
 class Application
 {
+
+struct Particle {
+	int x, y;
+	float size;
+	float velocityX, velocityY;
+	Color color;
+	float angle;
+	float acceleration;
+};
 public:
 
+	// Particles
+	Particle particles[100];
+	
 	// Window
 
 	SDL_Window* window;
