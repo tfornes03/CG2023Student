@@ -29,8 +29,14 @@ public:
 	SDL_Window* window;
 	int window_width;
 	int window_height;
+	Image toolbar;
 
 	float time;
+
+	//Mouse Pointing
+	float pos[4] = { };
+	int times = 0;
+
 
 	// Input
 	const Uint8* keystate;

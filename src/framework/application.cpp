@@ -19,6 +19,9 @@ Application::Application(const char* caption, int width, int height)
 	this->keystate = SDL_GetKeyboardState(nullptr);
 
 	this->framebuffer.Resize(w, h);
+	if (toolbar.LoadPNG("images/toolbar.png") == false) {
+		std::cout << "Image not found" << std::endl;
+	}
 }
 
 Application::~Application()
@@ -29,8 +32,7 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	
-	for (int i = 0; i < 100; i++) {
+	/*for (int i = 0; i < 100; i++) {
 		particles[i].x = window_width / 2;
 		particles[i].y = window_height / 2;
 		particles[i].size = (float)(rand() % 5) / 10.0f;
@@ -39,17 +41,17 @@ void Application::Init(void)
 		particles[i].velocityY = sin(particles[i].angle) * (float)(rand() % 5) / 5.0f;
 		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
 		//particles[i].acceleration = (float)(rand() % 5) / 5.0f;
-	}
+	}*/
+	
 
 }
 
-float pos[4] = { };
-int times = 0;
 
 // Render one frame
 void Application::Render(void)
 {
-	
+	framebuffer.DrawImagePixels(toolbar, framebuffer.width, framebuffer.height, true);
+
 	if (option == 1) {
 		if (times == 4) {
 			framebuffer.DrawLineDDA(pos[0], pos[1], pos[2], pos[3], Color::BLUE);

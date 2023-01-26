@@ -382,7 +382,6 @@ void Image::DrawCircle(int x0, int y0, int r, const Color& c, bool fill) {
 	int x = r;
 	int y = 0;
 	int decision = 1 - x;
-
 	while (y <= x) {
 		if (fill) {
 			for (int i = x0 - x; i <= x0 + x; i++) {
@@ -404,7 +403,6 @@ void Image::DrawCircle(int x0, int y0, int r, const Color& c, bool fill) {
 			SetPixelSafe(x0 + y, y0 - x, c);
 			SetPixelSafe(x0 - y, y0 - x, c);
 		}
-
 		y++;
 
 		if (decision <= 0) {
@@ -415,8 +413,31 @@ void Image::DrawCircle(int x0, int y0, int r, const Color& c, bool fill) {
 			decision += 2 * (y - x) + 1;
 		}
 	}
+}
+void Image::DrawImagePixels(const Image& image, int x, int y, bool top) {
+	int w = image.width;
+	int h = image.height;
+	if (top) {
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				Color c = image.GetPixel(i, j);
+				SetPixel(i, y - h + j, c);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				Color c = image.GetPixel(i, j);
+				SetPixel(i, j, c);
+			}
+		}
+	}
 
+}
 
+bool Image::ToolbarButton(int mousex, int mousey) {
 
 }
 

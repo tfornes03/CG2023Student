@@ -99,6 +99,8 @@ public:
 	void DrawLineBresenham(int x0, int y0, int x1, int y1, const Color& c);
 	void SetPixelCir(int x0, int y0, int x, int y, const Color& c);
 	void DrawCircle(int x0, int y0, int r, const Color& c, bool fill);
+	void DrawImagePixels(const Image& image, int x, int y, bool top);
+	bool ToolbarButton(int mousex, int mousey);
 
 };
 
