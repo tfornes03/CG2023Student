@@ -16,8 +16,7 @@ struct Particle {
 	float size;
 	float velocityX, velocityY;
 	Color color;
-	float angle;
-	float acceleration;
+
 };
 public:
 
@@ -30,6 +29,7 @@ public:
 	int window_width;
 	int window_height;
 	Image toolbar;
+	Color colorpaint;
 
 	float time;
 

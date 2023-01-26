@@ -437,8 +437,43 @@ void Image::DrawImagePixels(const Image& image, int x, int y, bool top) {
 
 }
 
-bool Image::ToolbarButton(int mousex, int mousey) {
-
+int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
+	if(top){
+		//std::cout << "heigh" << std::endl;
+		//std::cout << h - 15 << std::endl;
+		//std::cout << "mousx" << std::endl;
+		//std::cout << mousex << std::endl;
+		if ((mousex > 7 && mousex < 494) && (mousey < (h-15) && mousey > (h-47))) {
+			std::cout << "in" << std::endl;
+			if ((mousex > 7 && mousex < 32) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Fill white
+				return 1;
+			}
+			else if ((mousex > 36 && mousex < 60) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Fill Black
+				return 2;
+			}
+			else if ((mousex > 64 && mousex < 96) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Save
+				return 3;
+			}
+			else if ((mousex > 116 && mousex < 144) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Black
+				return 4;
+			}
+			else if ((mousex > 167 && mousex < 193) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Red
+				std::cout << "in" << std::endl;
+				return 5;
+			}
+			else if ((mousex > 216 && mousex < 243) && (mousey < (h - 15) && mousey > (h - 47))) {
+				//Green
+				return 6;
+			}
+		}
+		else { return 0; }
+	}
+	
 }
 
 

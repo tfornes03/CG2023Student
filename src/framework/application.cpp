@@ -17,6 +17,7 @@ Application::Application(const char* caption, int width, int height)
 	this->window_width = w;
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
+	this->colorpaint = Color(255,255,255);
 
 	this->framebuffer.Resize(w, h);
 	if (toolbar.LoadPNG("images/toolbar.png") == false) {
@@ -32,17 +33,15 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	/*for (int i = 0; i < 100; i++) {
-		particles[i].x = window_width / 2;
-		particles[i].y = window_height / 2;
-		particles[i].size = (float)(rand() % 5) / 10.0f;
-		particles[i].angle = (float)(rand() % 360);
-		particles[i].velocityX = cos(particles[i].angle) * (float)(rand() % 5) / 5.0f;
-		particles[i].velocityY = sin(particles[i].angle) * (float)(rand() % 5) / 5.0f;
-		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
-		//particles[i].acceleration = (float)(rand() % 5) / 5.0f;
-	}*/
 	
+	for (int i = 0; i<100; i++) {
+		particles[i].x = window_width/2;
+		particles[i].y = window_height/2;
+		particles[i].velocityX = rand()%10 + 1;
+		particles[i].velocityY = rand()%10 + 1;
+		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
+		particles[i].size = rand()%5;
+ 	}
 
 }
 
@@ -50,6 +49,7 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
+	
 	framebuffer.DrawImagePixels(toolbar, framebuffer.width, framebuffer.height, true);
 
 	if (option == 1) {
@@ -61,7 +61,7 @@ void Application::Render(void)
 
 	if (option == 2) {
 		if (times == 4) {
-			framebuffer.DrawLineBresenham(pos[0], pos[1], pos[2], pos[3], Color(255, 255, 255));
+			framebuffer.DrawLineBresenham(pos[0], pos[1], pos[2], pos[3], colorpaint);
 			times = 0;
 		}
 	}
@@ -80,6 +80,9 @@ void Application::Render(void)
 			}
 		}
 	}
+	if (option == 4) {
+		framebuffer.DrawImagePixels(toolbar, framebuffer.width, framebuffer.height, true);
+	}
 
 	if (option == 5) {
 		
@@ -87,6 +90,9 @@ void Application::Render(void)
 			framebuffer.DrawCircle(particles[i].x, particles[i].y, particles[i].size, particles[i].color, true);
 		}
 
+	}
+	if (option == 6) {
+		framebuffer.Fill(Color::BLACK);
 	}
 
 
@@ -97,27 +103,8 @@ void Application::Render(void)
 void Application::Update(float seconds_elapsed)
 {
 	for (int i = 0; i < 100; i++) {
-		//particles[i].x += particles[i].velocityX * seconds_elapsed;
-		//particles[i].y += particles[i].velocityY * seconds_elapsed;
-		//else {
-
-		//particles[i].velocityX += particles[i].acceleration * cos(particles[i].angle) * seconds_elapsed;
-		//particles[i].velocityY += particles[i].acceleration * sin(particles[i].angle) * seconds_elapsed;
-		//particles[i].x += particles[i].velocityX * seconds_elapsed;
-		//particles[i].y += particles[i].velocityY * seconds_elapsed;
-		particles[i].velocityX += particles[i].acceleration * cos(particles[i].angle) * seconds_elapsed;
-		particles[i].velocityY += particles[i].acceleration * sin(particles[i].angle) * seconds_elapsed;
-		particles[i].x += particles[i].velocityX * seconds_elapsed;
-		particles[i].y += particles[i].velocityY * seconds_elapsed;
-
-		//if (sqrt(pow(particles[i].x - window_width, 2) + pow(particles[i].y - window_height, 2)) > 200) {
-			//particles[i].x = window_width;
-			//particles[i].y = window_height;
-			//particles[i].velocityX = (float)(rand() % 10) / 10.0f - 0.5f;
-			//particles[i].velocityY = (float)(rand() % 10) / 10.0f - 0.5f;
-		//}
-
-
+		particles[i].x = particles[i].x + particles[i].velocityX;
+		particles[i].y = particles[i].y + particles[i].velocityY;
 	}
 }
 
@@ -139,10 +126,22 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
-		pos[times] = mouse_position.x;
-		pos[times + 1] = mouse_position.y;
-		times++;
-		times++;
+		int clicin = framebuffer.ToolbarButton(mouse_position.x, mouse_position.y, framebuffer.height, true);
+		std::cout << mouse_position.x << std::endl;
+		std::cout << mouse_position.y << std::endl;
+		std::cout << clicin << std::endl;
+		if (clicin == 0) {
+			pos[times] = mouse_position.x;
+			pos[times + 1] = mouse_position.y;
+			times++;
+			times++;
+		}
+		else {
+			if (clicin == 5) {
+				colorpaint = Color(255, 0, 0);
+			}
+		}
+		
 	}
 }
 
