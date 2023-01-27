@@ -71,7 +71,7 @@ void Application::Render(void)
 		if (times == 4) {
 			try {
 				float radius = sqrt((pos[2] - pos[0]) * (pos[2] - pos[0]) + (pos[3] - pos[1]) * (pos[3] - pos[1]));
-				framebuffer.DrawCircle(pos[0], pos[1], radius, colorpaint, true);
+				framebuffer.DrawCircle(pos[0], pos[1], radius, colorpaint, fill);
 				times = 0;
 			}
 			catch (std::exception& e) {
@@ -122,6 +122,7 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_4: option = 4; break;
 		case SDLK_5: option = 5; break;
 		case SDLK_6: option = 6; break;
+		case SDLK_f: if (fill) { fill = false; } else { fill = true; } break;
 	}
 }
 
@@ -177,8 +178,13 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			}
 			if (clicin == 14) {
 				option = 3;
+				fill = false;
 			}
 			if (clicin == 15) {
+				option = 3;
+				fill = true;
+			}
+			if (clicin == 16) {
 				option = 4;
 			}
 		}

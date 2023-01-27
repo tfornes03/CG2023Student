@@ -444,8 +444,7 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 		//std::cout << h - 15 << std::endl;
 		//std::cout << "mousx" << std::endl;
 		//std::cout << mousex << std::endl;
-		if ((mousex > 7 && mousex < 694) && (mousey < (h-15) && mousey > (h-47))) {
-			std::cout << "in" << std::endl;
+		if ((mousex > 7 && mousex < 744) && (mousey < (h-15) && mousey > (h-47))) {
 			if ((mousex > 7 && mousex < 32) && (mousey < (h - 15) && mousey > (h - 47))) {
 				//Fill white
 				return 1;
@@ -492,27 +491,30 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 				return 11;
 			}
 			else if ((mousex > 516 && mousex < 544) && (mousey < (h - 15) && mousey >(h - 47))) {
-				//Cian
+				//DDA
 				return 12;
 			}
 			else if ((mousex > 566 && mousex < 594) && (mousey < (h - 15) && mousey >(h - 47))) {
-				//White
+				//Bresenham
 				return 13;
 			}
 			else if ((mousex > 616 && mousex < 644) && (mousey < (h - 15) && mousey >(h - 47))) {
-				//Cian
+				//Circles
 				return 14;
 			}
 			else if ((mousex > 666 && mousex < 694) && (mousey < (h - 15) && mousey >(h - 47))) {
-				//White
+				//Circles Fill
 				return 15;
+			}
+			else if ((mousex > 716 && mousex < 744) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Painting
+				return 16;
 			}
 		}
 		else { return 0; }
 	}
 	else {
-		if ((mousex > 7 && mousex < 694) && (mousey < (63-15) && mousey >(63 - 47))) {
-			std::cout << "in" << std::endl;
+		if ((mousex > 7 && mousex < 744) && (mousey < (63-15) && mousey >(63 - 47))) {
 			if ((mousex > 7 && mousex < 32) && (mousey < (63 - 15) && mousey >(63 - 47))) {
 				//Fill white
 				return 1;
@@ -570,9 +572,13 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 				//Circles
 				return 14;
 			}
-			else if ((mousex > 666 && mousex < 694) && (mousey < (h - 15) && mousey >(h - 47))) {
+			else if ((mousex > 666 && mousex < 694) && (mousey < (63 - 15) && mousey >(63 - 47))) {
 				//Painting
 				return 15;
+			}
+			else if ((mousex > 716 && mousex < 744) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//White
+				return 16;
 			}
 		}
 		else { return 0; }

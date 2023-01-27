@@ -30,6 +30,7 @@ public:
 	Image toolbar;
 	Color colorpaint;
 	bool painting;
+	bool fill;
 
 	float time;
 
