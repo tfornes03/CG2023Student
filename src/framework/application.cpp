@@ -40,7 +40,7 @@ void Application::Init(void)
 		particles[i].velocityX = rand()%10 + 1;
 		particles[i].velocityY = rand()%10 + 1;
 		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
-		particles[i].size = rand()%5;
+
  	}
 
 }
@@ -49,12 +49,12 @@ void Application::Init(void)
 // Render one frame
 void Application::Render(void)
 {
-	
+
 	framebuffer.DrawImagePixels(toolbar, framebuffer.width, framebuffer.height, true);
 
 	if (option == 1) {
 		if (times == 4) {
-			framebuffer.DrawLineDDA(pos[0], pos[1], pos[2], pos[3], Color::BLUE);
+			framebuffer.DrawLineDDA(pos[0], pos[1], pos[2], pos[3], colorpaint);
 			times = 0;
 		}
 	}
@@ -70,7 +70,7 @@ void Application::Render(void)
 		if (times == 4) {
 			try {
 				float radius = sqrt((pos[2] - pos[0]) * (pos[2] - pos[0]) + (pos[3] - pos[1]) * (pos[3] - pos[1]));
-				framebuffer.DrawCircle(pos[0], pos[1], radius, Color::YELLOW, true);
+				framebuffer.DrawCircle(pos[0], pos[1], radius, colorpaint, true);
 				times = 0;
 			}
 			catch (std::exception& e) {
@@ -85,24 +85,25 @@ void Application::Render(void)
 	}
 
 	if (option == 5) {
-		
+		/*
 		for (int i = 0; i < 100; i++) {
-			framebuffer.DrawCircle(particles[i].x, particles[i].y, particles[i].size, particles[i].color, true);
+			framebuffer.DrawLineDDA(float(particles[i].x), float(particles[i].y), float(particles[i].x) + particles[i].velocityX), float(particles[i].y + particles[i].velocityY), Color::BLUE);
 		}
-
+		*/
 	}
 	if (option == 6) {
 		framebuffer.Fill(Color::BLACK);
 	}
 
-
 	framebuffer.Render();
+
 }
+
 
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 1000; i++) {
 		particles[i].x = particles[i].x + particles[i].velocityX;
 		particles[i].y = particles[i].y + particles[i].velocityY;
 	}
@@ -137,8 +138,29 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			times++;
 		}
 		else {
+			if (clicin == 4) {
+				colorpaint = Color::BLACK;
+			}
 			if (clicin == 5) {
-				colorpaint = Color(255, 0, 0);
+				colorpaint = Color::RED;
+			}
+			if (clicin == 6) {
+				colorpaint = Color::GREEN;
+			}
+			if (clicin == 7) {
+				colorpaint = Color::BLUE;
+			}
+			if (clicin == 8) {
+				colorpaint = Color::YELLOW;
+			}
+			if (clicin == 9) {
+				colorpaint = Color::PURPLE;
+			}
+			if (clicin == 10) {
+				colorpaint = Color::CYAN;
+			}
+			if (clicin == 11) {
+				colorpaint = Color::WHITE;
 			}
 		}
 		

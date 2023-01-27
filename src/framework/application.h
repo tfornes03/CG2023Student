@@ -13,7 +13,6 @@ class Application
 
 struct Particle {
 	int x, y;
-	float size;
 	float velocityX, velocityY;
 	Color color;
 

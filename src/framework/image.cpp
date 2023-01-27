@@ -66,6 +66,7 @@ void Image::Render()
 	glDrawPixels(width, height, bytes_per_pixel == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
 
+
 // Change image size (the old one will remain in the top-left corner)
 void Image::Resize(unsigned int width, unsigned int height)
 {
@@ -346,8 +347,8 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 	Vector2 start;
 	int x = x0;
 	int y = y0;
-	start.x = x;
-	start.y = y;
+	start.x = (float) x;
+	start.y = (float) y;
 	for (int i = 0; i < d; i++) {
 		start.x += v.x;
 		start.y += v.y;
@@ -463,12 +464,32 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 			}
 			else if ((mousex > 167 && mousex < 193) && (mousey < (h - 15) && mousey > (h - 47))) {
 				//Red
-				std::cout << "in" << std::endl;
+				//std::cout << "in" << std::endl;
 				return 5;
 			}
-			else if ((mousex > 216 && mousex < 243) && (mousey < (h - 15) && mousey > (h - 47))) {
+			else if ((mousex > 216 && mousex < 244) && (mousey < (h - 15) && mousey > (h - 47))) {
 				//Green
 				return 6;
+			}
+			else if ((mousex > 266 && mousex < 294) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Blue
+				return 7;
+			}
+			else if ((mousex > 316 && mousex < 344) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Yellow
+				return 8;
+			}
+			else if ((mousex > 366 && mousex < 394) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Pink
+				return 9;
+			}
+			else if ((mousex > 416 && mousex < 444) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Cian
+				return 10;
+			}
+			else if ((mousex > 466 && mousex < 494) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//White
+				return 11;
 			}
 		}
 		else { return 0; }
