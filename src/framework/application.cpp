@@ -18,6 +18,7 @@ Application::Application(const char* caption, int width, int height)
 	this->window_height = h;
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->colorpaint = Color(255,255,255);
+	this->painting = false;
 
 	this->framebuffer.Resize(w, h);
 	if (toolbar.LoadPNG("images/toolbar.png") == false) {
@@ -33,7 +34,7 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	
+	/*
 	for (int i = 0; i<100; i++) {
 		particles[i].x = window_width/2;
 		particles[i].y = window_height/2;
@@ -42,7 +43,7 @@ void Application::Init(void)
 		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
 
  	}
-
+	*/
 }
 
 
@@ -80,9 +81,6 @@ void Application::Render(void)
 			}
 		}
 	}
-	if (option == 4) {
-		framebuffer.DrawImagePixels(toolbar, framebuffer.width, framebuffer.height, true);
-	}
 
 	if (option == 5) {
 		/*
@@ -103,10 +101,12 @@ void Application::Render(void)
 // Called after render
 void Application::Update(float seconds_elapsed)
 {
+	/*
 	for (int i = 0; i < 1000; i++) {
 		particles[i].x = particles[i].x + particles[i].velocityX;
 		particles[i].y = particles[i].y + particles[i].velocityY;
 	}
+	*/
 }
 
 
@@ -121,16 +121,17 @@ void Application::OnKeyPressed( SDL_KeyboardEvent event )
 		case SDLK_3: option = 3; break;
 		case SDLK_4: option = 4; break;
 		case SDLK_5: option = 5; break;
+		case SDLK_6: option = 6; break;
 	}
 }
 
 void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
+		if (option == 4) {
+			painting = true;
+		}
 		int clicin = framebuffer.ToolbarButton(mouse_position.x, mouse_position.y, framebuffer.height, true);
-		std::cout << mouse_position.x << std::endl;
-		std::cout << mouse_position.y << std::endl;
-		std::cout << clicin << std::endl;
 		if (clicin == 0) {
 			pos[times] = mouse_position.x;
 			pos[times + 1] = mouse_position.y;
@@ -138,6 +139,12 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			times++;
 		}
 		else {
+			if (clicin == 1) {
+				framebuffer.Fill(Color::WHITE);
+			}
+			if (clicin == 2) {
+				framebuffer.Fill(Color::BLACK);
+			}
 			if (clicin == 4) {
 				colorpaint = Color::BLACK;
 			}
@@ -162,6 +169,18 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			if (clicin == 11) {
 				colorpaint = Color::WHITE;
 			}
+			if (clicin == 12) {
+				option = 1;
+			}
+			if (clicin == 13) {
+				option = 2;
+			}
+			if (clicin == 14) {
+				option = 3;
+			}
+			if (clicin == 15) {
+				option = 4;
+			}
 		}
 		
 	}
@@ -170,12 +189,15 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 void Application::OnMouseButtonUp( SDL_MouseButtonEvent event )
 {
 	if (event.button == SDL_BUTTON_LEFT) {
-
+		painting = false;
 	}
 }
 
 void Application::OnMouseMove(SDL_MouseButtonEvent event)
 {
+	if (painting) {
+		framebuffer.DrawCircle(mouse_position.x, mouse_position.y, 10, colorpaint, true);
+	}
 	
 }
 

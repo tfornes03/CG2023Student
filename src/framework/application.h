@@ -29,6 +29,7 @@ public:
 	int window_height;
 	Image toolbar;
 	Color colorpaint;
+	bool painting;
 
 	float time;
 

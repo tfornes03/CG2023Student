@@ -64,8 +64,8 @@ void Image::Render()
 {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glDrawPixels(width, height, bytes_per_pixel == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-}
 
+}
 
 // Change image size (the old one will remain in the top-left corner)
 void Image::Resize(unsigned int width, unsigned int height)
@@ -444,7 +444,7 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 		//std::cout << h - 15 << std::endl;
 		//std::cout << "mousx" << std::endl;
 		//std::cout << mousex << std::endl;
-		if ((mousex > 7 && mousex < 494) && (mousey < (h-15) && mousey > (h-47))) {
+		if ((mousex > 7 && mousex < 694) && (mousey < (h-15) && mousey > (h-47))) {
 			std::cout << "in" << std::endl;
 			if ((mousex > 7 && mousex < 32) && (mousey < (h - 15) && mousey > (h - 47))) {
 				//Fill white
@@ -491,8 +491,92 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 				//White
 				return 11;
 			}
+			else if ((mousex > 516 && mousex < 544) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Cian
+				return 12;
+			}
+			else if ((mousex > 566 && mousex < 594) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//White
+				return 13;
+			}
+			else if ((mousex > 616 && mousex < 644) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Cian
+				return 14;
+			}
+			else if ((mousex > 666 && mousex < 694) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//White
+				return 15;
+			}
 		}
 		else { return 0; }
+	}
+	else {
+		if ((mousex > 7 && mousex < 694) && (mousey < (63-15) && mousey >(63 - 47))) {
+			std::cout << "in" << std::endl;
+			if ((mousex > 7 && mousex < 32) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Fill white
+				return 1;
+			}
+			else if ((mousex > 36 && mousex < 60) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Fill Black
+				return 2;
+			}
+			else if ((mousex > 64 && mousex < 96) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Save
+				return 3;
+			}
+			else if ((mousex > 116 && mousex < 144) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Black
+				return 4;
+			}
+			else if ((mousex > 167 && mousex < 193) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Red
+				//std::cout << "in" << std::endl;
+				return 5;
+			}
+			else if ((mousex > 216 && mousex < 244) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Green
+				return 6;
+			}
+			else if ((mousex > 266 && mousex < 294) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Blue
+				return 7;
+			}
+			else if ((mousex > 316 && mousex < 344) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Yellow
+				return 8;
+			}
+			else if ((mousex > 366 && mousex < 394) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Pink
+				return 9;
+			}
+			else if ((mousex > 416 && mousex < 444) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Cian
+				return 10;
+			}
+			else if ((mousex > 466 && mousex < 494) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//White
+				return 11;
+			}
+			else if ((mousex > 516 && mousex < 544) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//DDA
+				return 12;
+			}
+			else if ((mousex > 566 && mousex < 594) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Bresemham
+				return 13;
+			}
+			else if ((mousex > 616 && mousex < 644) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Circles
+				return 14;
+			}
+			else if ((mousex > 666 && mousex < 694) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//Painting
+				return 15;
+			}
+		}
+		else { return 0; }
+
 	}
 	
 }
