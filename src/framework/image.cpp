@@ -352,7 +352,7 @@ void Image::DrawLineDDA(int x0, int y0, int x1, int y1, const Color& c) {
 	for (int i = 0; i < d; i++) {
 		start.x += v.x;
 		start.y += v.y;
-		SetPixel(floor(start.x), floor(start.y), c);
+		SetPixelSafe(floor(start.x), floor(start.y), c);
 	}
 }
 void Image::DrawLineBresenham(int x0, int y0, int x1, int y1, const Color& c) {
@@ -440,11 +440,7 @@ void Image::DrawImagePixels(const Image& image, int x, int y, bool top) {
 
 int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 	if(top){
-		//std::cout << "heigh" << std::endl;
-		//std::cout << h - 15 << std::endl;
-		//std::cout << "mousx" << std::endl;
-		//std::cout << mousex << std::endl;
-		if ((mousex > 7 && mousex < 744) && (mousey < (h-15) && mousey > (h-47))) {
+		if ((mousex > 7 && mousex < 794) && (mousey < (h-15) && mousey > (h-47))) {
 			if ((mousex > 7 && mousex < 32) && (mousey < (h - 15) && mousey > (h - 47))) {
 				//Fill white
 				return 1;
@@ -510,11 +506,15 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 				//Painting
 				return 16;
 			}
+			else if ((mousex > 766 && mousex < 794) && (mousey < (h - 15) && mousey >(h - 47))) {
+				//AnimationParticles
+				return 17;
+			}
 		}
 		else { return 0; }
 	}
 	else {
-		if ((mousex > 7 && mousex < 744) && (mousey < (63-15) && mousey >(63 - 47))) {
+		if ((mousex > 7 && mousex < 794) && (mousey < (63-15) && mousey >(63 - 47))) {
 			if ((mousex > 7 && mousex < 32) && (mousey < (63 - 15) && mousey >(63 - 47))) {
 				//Fill white
 				return 1;
@@ -573,11 +573,15 @@ int Image::ToolbarButton(int mousex, int mousey, int h, bool top) {
 				return 14;
 			}
 			else if ((mousex > 666 && mousex < 694) && (mousey < (63 - 15) && mousey >(63 - 47))) {
-				//Painting
+				//Circle Fill
 				return 15;
 			}
 			else if ((mousex > 716 && mousex < 744) && (mousey < (63 - 15) && mousey >(63 - 47))) {
-				//White
+				//Painting
+				return 16;
+			}
+			else if ((mousex > 766 && mousex < 794) && (mousey < (63 - 15) && mousey >(63 - 47))) {
+				//Painting
 				return 16;
 			}
 		}

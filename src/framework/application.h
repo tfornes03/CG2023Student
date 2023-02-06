@@ -12,15 +12,12 @@ class Application
 {
 
 struct Particle {
-	int x, y;
+	float x, y;
 	float velocityX, velocityY;
-	Color color;
-
 };
 public:
-
 	// Particles
-	Particle particles[100];
+	Particle particles[600];
 	
 	// Window
 
@@ -31,6 +28,8 @@ public:
 	Color colorpaint;
 	bool painting;
 	bool fill;
+	int option;
+	int particles_count_black;
 
 	float time;
 

@@ -3,7 +3,6 @@
 #include "shader.h"
 #include "utils.h" 
 
-int option = 0;
 
 Application::Application(const char* caption, int width, int height)
 {
@@ -19,6 +18,8 @@ Application::Application(const char* caption, int width, int height)
 	this->keystate = SDL_GetKeyboardState(nullptr);
 	this->colorpaint = Color(255,255,255);
 	this->painting = false;
+	this->option = 0;
+	this->particles_count_black = 0;
 
 	this->framebuffer.Resize(w, h);
 	if (toolbar.LoadPNG("images/toolbar.png") == false) {
@@ -34,16 +35,28 @@ Application::~Application()
 void Application::Init(void)
 {
 	std::cout << "Initiating app..." << std::endl;
-	/*
-	for (int i = 0; i<100; i++) {
-		particles[i].x = window_width/2;
-		particles[i].y = window_height/2;
-		particles[i].velocityX = rand()%10 + 1;
-		particles[i].velocityY = rand()%10 + 1;
-		particles[i].color = Color(rand() % 255, rand() % 255, rand() % 255);
-
+	int d = 0;
+	int valorx = 0;
+	int valory = 0;
+	float random = 0;
+	
+	for (int i = 0; i<600; i++) {
+		random = rand()%1280; 
+		valorx = random- framebuffer.width/2;
+		random = rand()%720;
+		valory = random - framebuffer.height/2;
+		d = fmax(abs(valorx), abs(valory));
+		random = rand()%640 + 641;
+		particles[i].velocityX = (random - framebuffer.width / 2)/d;
+		random = rand()%360 + 361;
+		particles[i].velocityY = (random - framebuffer.height / 2)/d;
+		random = rand()%640 + 1;
+		particles[i].x = framebuffer.width / 2 + particles[i].velocityX;
+		random = rand()%360 + 1;
+		particles[i].y = framebuffer.height / 2 + particles[i].velocityY;
  	}
-	*/
+
+	
 }
 
 
@@ -83,16 +96,24 @@ void Application::Render(void)
 	}
 
 	if (option == 5) {
-		/*
-		for (int i = 0; i < 100; i++) {
-			framebuffer.DrawLineDDA(float(particles[i].x), float(particles[i].y), float(particles[i].x) + particles[i].velocityX), float(particles[i].y + particles[i].velocityY), Color::BLUE);
+		
+		for (int i = 0; i < 600; i++) {
+			Color color = Color(rand() % 255, rand() % 255, rand() % 255);
+			framebuffer.DrawCircle(floor(particles[i].x + particles[i].velocityX), floor(particles[i].y + particles[i].velocityY), 1, color, true);
 		}
-		*/
+		framebuffer.DrawCircle(framebuffer.width / 2, framebuffer.height / 2, 10, Color::BLACK, true);
+
+		//if (particles_count_black > 10) {
+		//	framebuffer.Fill(Color::BLACK);
+		//	particles_coun}
 	}
+		
+	
 	if (option == 6) {
 		framebuffer.Fill(Color::BLACK);
 	}
 
+	
 	framebuffer.Render();
 
 }
@@ -100,13 +121,31 @@ void Application::Render(void)
 
 // Called after render
 void Application::Update(float seconds_elapsed)
+
 {
-	/*
-	for (int i = 0; i < 1000; i++) {
+	if (option == 5) {
+	for (int i = 0; i < 600; i++) {
 		particles[i].x = particles[i].x + particles[i].velocityX;
 		particles[i].y = particles[i].y + particles[i].velocityY;
+
+		if (particles[i].x > 1280 || particles[i].x < 0) {
+			particles[i].x = framebuffer.width / 2;
+			particles[i].y = framebuffer.height / 2;
+		}
+		if (particles[i].y > 720 || particles[i].y < 0) {
+			particles[i].x = framebuffer.width / 2;
+			particles[i].y = framebuffer.height / 2;
+		}
+		if (particles_count_black > 5000) {
+			framebuffer.Fill(Color::BLACK);
+			particles_count_black = 0;
+		}
+		particles_count_black++;
 	}
-	*/
+	}
+	
+
+	
 }
 
 
@@ -133,7 +172,7 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			painting = true;
 		}
 		int clicin = framebuffer.ToolbarButton(mouse_position.x, mouse_position.y, framebuffer.height, true);
-		if (clicin == 0) {
+		if (clicin == 0 && !(option==0) && !(option == 5)) {
 			pos[times] = mouse_position.x;
 			pos[times + 1] = mouse_position.y;
 			times++;
@@ -187,6 +226,10 @@ void Application::OnMouseButtonDown( SDL_MouseButtonEvent event )
 			if (clicin == 16) {
 				option = 4;
 			}
+			if (clicin == 17) {
+				option = 5;
+			} 
+
 		}
 		
 	}
